@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebDesign — Custom websites for small businesses, startups, and online stores.">
+<title>WebDesign | Web Design Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─── */
+:root {
+  --bg:       #080810;
+  --bg2:      #0d0d18;
+  --bg3:      #12121f;
+  --surf:     rgba(255,255,255,0.035);
+  --surf2:    rgba(255,255,255,0.065);
+  --b:        rgba(255,255,255,0.07);
+  --b2:       rgba(255,255,255,0.13);
+  --b3:       rgba(255,255,255,0.22);
+  --ink:      #eeeef5;
+  --ink2:     #8888a8;
+  --ink3:     #44445a;
+  --a:        #6c63ff;
+  --a2:       #9d97ff;
+  --ag:       rgba(108,99,255,0.2);
+  --teal:     #00d4b4;
+  --tg:       rgba(0,212,180,0.12);
+  --r:        16px;
+  --r2:       24px;
+  --ease:     cubic-bezier(.22,.68,0,1.2);
+  --easeo:    cubic-bezier(.25,.46,.45,.94);
+}
+[data-theme="light"] {
+  --bg:       #f5f5fa;
+  --bg2:      #ffffff;
+  --bg3:      #ededf5;
+  --surf:     rgba(0,0,0,0.025);
+  --surf2:    rgba(0,0,0,0.05);
+  --b:        rgba(0,0,0,0.07);
+  --b2:       rgba(0,0,0,0.12);
+  --b3:       rgba(0,0,0,0.2);
+  --ink:      #0c0c18;
+  --ink2:     #4a4a68;
+  --ink3:     #9999b8;
+  --a:        #4f46e5;
+  --a2:       #6c63ff;
+  --ag:       rgba(79,70,229,0.1);
+  --teal:     #0b9e87;
+  --tg:       rgba(11,158,135,0.08);
+}
+
+/* ─── RESET ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Geist',system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);
+  line-height:1.65;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+::selection{background:var(--a);color:#fff}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--b3);border-radius:2px}
+
+/* ─── TYPE ─── */
+.serif{font-family:'Instrument Serif',Georgia,serif}
+.mono{font-family:'Geist Mono',monospace}
+
+/* ─── NAV ─── */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;height:64px;
+  background:rgba(8,8,16,0.6);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--b);
+  transition:background .3s;
+}
+[data-theme="light"] nav{background:rgba(245,245,250,0.75)}
+.nav-logo{
+  font-family:'Geist Mono',monospace;
+  font-weight:500;font-size:1rem;letter-spacing:-.01em;
+  color:var(--ink);
+}
+.nav-logo span{color:var(--a2)}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+.btn-theme{
+  width:34px;height:34px;border-radius:8px;
+  border:1px solid var(--b2);background:var(--surf2);
+  color:var(--ink2);font-size:.9rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;cursor:pointer;
+}
+.btn-theme:hover{border-color:var(--a);color:var(--ink)}
+.btn-cta{
+  height:36px;padding:0 1.1rem;
+  border-radius:8px;border:1px solid var(--b2);
+  background:var(--surf2);color:var(--ink);
+  font-size:.85rem;font-weight:500;
+  transition:all .2s;cursor:pointer;
+  display:flex;align-items:center;gap:.4rem;
+}
+.btn-cta:hover{background:var(--a);border-color:var(--a);color:#fff}
+.btn-cta .arrow{transition:transform .2s}
+.btn-cta:hover .arrow{transform:translateX(2px)}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100svh;
+  display:flex;align-items:center;justify-content:center;
+  padding:120px 5% 80px;
+  position:relative;overflow:hidden;
+  text-align:center;
+}
+/* noise texture */
+.hero::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size:200px 200px;opacity:.5;
+}
+.hero-glow{
+  position:absolute;pointer-events:none;
+  width:900px;height:600px;
+  top:50%;left:50%;transform:translate(-50%,-60%);
+  background:radial-gradient(ellipse at 40% 40%,rgba(108,99,255,.18) 0%,transparent 55%),
+             radial-gradient(ellipse at 70% 70%,rgba(0,212,180,.1) 0%,transparent 50%);
+  filter:blur(1px);
+}
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--b) 1px,transparent 1px),
+    linear-gradient(90deg,var(--b) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%);
+}
+.hero-content{position:relative;z-index:1;max-width:820px;margin:0 auto}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  margin-bottom:2rem;
+  padding:.35rem 1rem;border-radius:100px;
+  border:1px solid var(--b2);background:var(--surf);
+  font-size:.78rem;color:var(--ink2);letter-spacing:.02em;
+  backdrop-filter:blur(8px);
+}
+.hero-eyebrow-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--teal);
+  box-shadow:0 0 8px var(--teal);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-title{
+  font-family:'Instrument Serif',Georgia,serif;
+  font-size:clamp(3.2rem,8vw,6.5rem);
+  line-height:1.05;letter-spacing:-.025em;
+  margin-bottom:1.5rem;
+  color:var(--ink);
+}
+.hero-title em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--a2) 0%,var(--teal) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:clamp(.95rem,2vw,1.15rem);
+  color:var(--ink2);max-width:500px;margin:0 auto 2.5rem;
+  font-weight:300;line-height:1.75;
+}
+.hero-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{
+  height:48px;padding:0 1.75rem;
+  border-radius:10px;border:none;
+  background:var(--a);color:#fff;
+  font-family:inherit;font-size:.95rem;font-weight:500;
+  display:inline-flex;align-items:center;gap:.5rem;
+  cursor:pointer;
+  box-shadow:0 0 0 0 var(--ag);
+  transition:transform .2s var(--ease),box-shadow .2s,background .2s;
+}
+.btn-primary:hover{background:#5a52e8;transform:translateY(-2px);box-shadow:0 8px 32px var(--ag)}
+.btn-ghost{
+  height:48px;padding:0 1.75rem;
+  border-radius:10px;
+  border:1px solid var(--b2);background:var(--surf);
+  color:var(--ink);font-family:inherit;font-size:.95rem;font-weight:400;
+  display:inline-flex;align-items:center;gap:.5rem;
+  cursor:pointer;backdrop-filter:blur(8px);
+  transition:all .2s;
+}
+.btn-ghost:hover{border-color:var(--b3);background:var(--surf2)}
+
+/* ─── MARQUEE ─── */
+.marquee-wrap{
+  border-top:1px solid var(--b);border-bottom:1px solid var(--b);
+  background:var(--surf);padding:1rem 0;overflow:hidden;
+}
+.marquee-track{
+  display:flex;gap:3rem;
+  animation:slide 28s linear infinite;
+  white-space:nowrap;width:max-content;
+}
+.marquee-item{
+  font-family:'Geist Mono',monospace;
+  font-size:.72rem;font-weight:500;
+  color:var(--ink3);text-transform:uppercase;letter-spacing:.12em;
+  display:flex;align-items:center;gap:.75rem;
+}
+.marquee-item::after{content:'·';color:var(--a2);font-size:1rem}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ─── SECTION BASE ─── */
+section{padding:7rem 5%}
+.container{max-width:1160px;margin:0 auto}
+.eyebrow{
+  font-family:'Geist Mono',monospace;
+  font-size:.7rem;font-weight:500;
+  text-transform:uppercase;letter-spacing:.14em;
+  color:var(--a2);margin-bottom:.75rem;display:block;
+}
+.section-h{
+  font-family:'Instrument Serif',Georgia,serif;
+  font-size:clamp(2rem,4.5vw,3.2rem);
+  line-height:1.1;letter-spacing:-.02em;
+  margin-bottom:1rem;
+}
+.section-sub{color:var(--ink2);font-size:1rem;line-height:1.75;max-width:480px}
+
+/* ─── PROCESS ─── */
+#process{background:var(--bg2)}
+.process-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--b);
+  border:1px solid var(--b);border-radius:var(--r2);overflow:hidden;
+  margin-top:3.5rem;
+}
+.p-step{
+  background:var(--bg2);
+  padding:2.5rem;
+  transition:background .25s;
+  position:relative;
+}
+.p-step::before{
+  content:attr(data-n);
+  position:absolute;top:2rem;right:2rem;
+  font-family:'Geist Mono',monospace;
+  font-size:.7rem;color:var(--ink3);
+}
+.p-step:hover{background:var(--bg3)}
+.p-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:var(--surf2);border:1px solid var(--b2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.15rem;margin-bottom:1.25rem;
+}
+.p-step h3{font-size:1.05rem;font-weight:600;margin-bottom:.4rem}
+.p-step p{font-size:.875rem;color:var(--ink2);line-height:1.7}
+
+/* ─── PRICING ─── */
+#pricing{background:var(--bg)}
+.pricing-wrap{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.25rem;margin-top:3.5rem;
+}
+.p-card{
+  border-radius:var(--r2);border:1px solid var(--b);
+  background:var(--bg2);padding:2rem;
+  display:flex;flex-direction:column;
+  transition:transform .25s var(--ease),border-color .25s,box-shadow .25s;
+  position:relative;overflow:hidden;
+}
+.p-card:hover{transform:translateY(-4px);border-color:var(--b2)}
+.p-card.hot{
+  border-color:var(--a);
+  background:linear-gradient(160deg,rgba(108,99,255,.06) 0%,var(--bg2) 60%);
+  box-shadow:0 0 60px -10px rgba(108,99,255,.2);
+}
+.p-card.hot:hover{box-shadow:0 8px 60px -8px rgba(108,99,255,.3)}
+.p-hot-badge{
+  position:absolute;top:0;right:0;
+  background:var(--a);color:#fff;
+  font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:.3rem .75rem;
+  border-radius:0 var(--r2) 0 var(--r);
+}
+.p-tier{
+  font-family:'Geist Mono',monospace;
+  font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--ink3);margin-bottom:.5rem;
+}
+.p-name{font-size:1.25rem;font-weight:600;margin-bottom:.35rem}
+.p-desc{font-size:.82rem;color:var(--ink2);margin-bottom:1.5rem;line-height:1.65}
+.p-price{
+  display:flex;align-items:baseline;gap:.2rem;
+  margin-bottom:1.75rem;padding-bottom:1.5rem;
+  border-bottom:1px solid var(--b);
+}
+.p-cur{font-size:1.1rem;font-weight:500;color:var(--ink2);align-self:flex-start;margin-top:.3rem}
+.p-amt{
+  font-family:'Instrument Serif',Georgia,serif;
+  font-size:3rem;line-height:1;color:var(--ink);
+}
+.p-per{font-size:.8rem;color:var(--ink3);margin-left:.1rem}
+.p-feats{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem;flex:1}
+.p-feats li{display:flex;align-items:flex-start;gap:.6rem;font-size:.85rem;line-height:1.5}
+.p-feats li::before{content:'✓';color:var(--teal);font-size:.85rem;flex-shrink:0;margin-top:.05rem}
+.p-feats li.no{color:var(--ink3)}
+.p-feats li.no::before{content:'–';color:var(--ink3)}
+.p-btn{
+  width:100%;height:42px;border-radius:9px;
+  font-family:inherit;font-size:.875rem;font-weight:500;
+  cursor:pointer;transition:all .2s;border:none;
+}
+.p-btn.solid{background:var(--a);color:#fff}
+.p-btn.solid:hover{background:#5a52e8;box-shadow:0 4px 20px var(--ag)}
+.p-btn.outline{background:transparent;border:1px solid var(--b2);color:var(--ink)}
+.p-btn.outline:hover{border-color:var(--b3);background:var(--surf2)}
+.pricing-note{
+  text-align:center;margin-top:1.5rem;
+  font-size:.82rem;color:var(--ink3);
+}
+.pricing-note a{color:var(--a2);transition:color .2s}
+.pricing-note a:hover{color:var(--ink)}
+
+/* ─── ABOUT ─── */
+#about{background:var(--bg2)}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;margin-top:3.5rem;
+}
+.about-visual{
+  border-radius:var(--r2);border:1px solid var(--b);
+  background:var(--bg3);padding:2rem;
+  position:relative;overflow:hidden;
+}
+.about-visual::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(108,99,255,.1),transparent);
+  pointer-events:none;
+}
+.team-cards{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;position:relative;z-index:1}
+.tm-card{
+  background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);
+  padding:1.25rem;text-align:center;
+  transition:border-color .2s,transform .2s;
+}
+.tm-card:hover{border-color:var(--b2);transform:translateY(-2px)}
+.tm-av{
+  width:48px;height:48px;border-radius:50%;
+  margin:0 auto .875rem;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:600;font-size:.9rem;color:#fff;
+  font-family:'Geist Mono',monospace;
+}
+.tm-card h4{font-size:.9rem;font-weight:600;margin-bottom:.2rem}
+.tm-card span{font-size:.75rem;color:var(--ink3)}
+.about-text .section-h{margin-bottom:1.25rem}
+.about-text p{color:var(--ink2);margin-bottom:1.1rem;line-height:1.8;font-size:.95rem}
+.value-list{display:flex;flex-direction:column;gap:.75rem;margin-top:1.75rem}
+.val{
+  display:flex;align-items:flex-start;gap:.875rem;
+  padding:1rem 1.25rem;border-radius:var(--r);
+  border:1px solid var(--b);background:var(--surf);
+  transition:border-color .2s;
+}
+.val:hover{border-color:var(--b2)}
+.val-icon{font-size:1.1rem;flex-shrink:0;margin-top:.1rem}
+.val h4{font-size:.875rem;font-weight:600;margin-bottom:.2rem}
+.val p{font-size:.8rem;color:var(--ink2);line-height:1.6}
+
+/* ─── CONTACT ─── */
+#contact{background:var(--bg)}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1.35fr;
+  gap:4rem;align-items:start;margin-top:3.5rem;
+}
+.contact-meta .section-h{margin-bottom:1rem}
+.contact-meta p{color:var(--ink2);font-size:.95rem;line-height:1.8;margin-bottom:2rem}
+.c-details{display:flex;flex-direction:column;gap:.875rem}
+.c-item{display:flex;align-items:center;gap:.75rem;font-size:.875rem;color:var(--ink2)}
+.c-icon{
+  width:34px;height:34px;border-radius:8px;flex-shrink:0;
+  background:var(--surf2);border:1px solid var(--b);
+  display:flex;align-items:center;justify-content:center;font-size:.95rem;
+}
+.contact-form-wrap{
+  background:var(--bg2);border:1px solid var(--b);
+  border-radius:var(--r2);padding:2.25rem;
+}
+.form-head{font-size:1.05rem;font-weight:600;margin-bottom:1.5rem}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;margin-bottom:.875rem}
+.f-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.875rem}
+.f-group label{font-size:.78rem;font-weight:500;color:var(--ink3);letter-spacing:.01em}
+.f-group input,
+.f-group select,
+.f-group textarea{
+  padding:.7rem .9rem;
+  border-radius:9px;border:1px solid var(--b);
+  background:var(--bg);color:var(--ink);
+  font-family:inherit;font-size:.875rem;
+  outline:none;transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;
+}
+.f-group input:focus,
+.f-group select:focus,
+.f-group textarea:focus{
+  border-color:var(--a);
+  box-shadow:0 0 0 3px rgba(108,99,255,.12);
+}
+.f-group select option{background:var(--bg2)}
+.f-group textarea{resize:vertical;min-height:110px}
+.btn-send{
+  width:100%;height:46px;border-radius:10px;border:none;
+  background:var(--a);color:#fff;
+  font-family:inherit;font-size:.95rem;font-weight:500;
+  cursor:pointer;
+  transition:background .2s,transform .2s var(--ease),box-shadow .2s;
+  box-shadow:0 0 0 0 var(--ag);
+}
+.btn-send:hover{background:#5a52e8;transform:translateY(-1px);box-shadow:0 6px 28px var(--ag)}
+.btn-send:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.form-ok{display:none;text-align:center;padding:2.5rem 1rem}
+.form-ok-icon{font-size:2.5rem;margin-bottom:.75rem}
+.form-ok h3{font-size:1.1rem;font-weight:600;color:var(--teal);margin-bottom:.4rem}
+.form-ok p{font-size:.875rem;color:var(--ink2)}
+
+/* ─── FAQ ─── */
+#faq{background:var(--bg2)}
+.faq-inner{max-width:680px;margin:3.5rem auto 0;display:flex;flex-direction:column;gap:.6rem}
+.faq-item{
+  border:1px solid var(--b);border-radius:var(--r);
+  background:var(--bg3);overflow:hidden;transition:border-color .2s;
+}
+.faq-item.open{border-color:var(--b2)}
+.faq-btn{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1.1rem 1.35rem;text-align:left;cursor:pointer;
+  font-family:inherit;font-size:.9rem;font-weight:500;color:var(--ink);
+  background:none;border:none;
+}
+.faq-chevron{
+  width:22px;height:22px;flex-shrink:0;border-radius:50%;
+  border:1px solid var(--b2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;color:var(--ink3);
+  transition:transform .3s,background .2s,color .2s;
+}
+.faq-item.open .faq-chevron{transform:rotate(180deg);background:var(--a);color:#fff;border-color:var(--a)}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .35s var(--easeo)}
+.faq-body-inner{padding:0 1.35rem 1.1rem;font-size:.875rem;color:var(--ink2);line-height:1.8}
+.faq-item.open .faq-body{max-height:260px}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--bg2);border-top:1px solid var(--b);
+  padding:3.5rem 5% 2rem;
+}
+.footer-inner{
+  max-width:1160px;margin:0 auto;
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:2rem;flex-wrap:wrap;
+  padding-bottom:2.5rem;
+  border-bottom:1px solid var(--b);
+  margin-bottom:1.75rem;
+}
+.footer-brand .nav-logo{font-size:1rem;display:block;margin-bottom:.75rem}
+.footer-brand p{font-size:.8rem;color:var(--ink3);max-width:240px;line-height:1.7}
+.footer-social{display:flex;gap:.5rem;margin-top:1rem}
+.soc{
+  width:32px;height:32px;border-radius:7px;
+  border:1px solid var(--b);background:var(--surf);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;color:var(--ink3);
+  transition:all .2s;
+}
+.soc:hover{border-color:var(--a);color:var(--a);background:rgba(108,99,255,.06)}
+.footer-col h4{
+  font-family:'Geist Mono',monospace;
+  font-size:.68rem;font-weight:500;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--ink3);margin-bottom:.875rem;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+.footer-col ul li a{font-size:.82rem;color:var(--ink2);transition:color .2s}
+.footer-col ul li a:hover{color:var(--ink)}
+.footer-bottom{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-bottom p{font-size:.75rem;color:var(--ink3)}
+.footer-legal{display:flex;gap:1.25rem}
+.footer-legal a{font-size:.75rem;color:var(--ink3);transition:color .2s}
+.footer-legal a:hover{color:var(--ink2)}
+
+/* ─── SCROLL ANIM ─── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s var(--easeo),transform .65s var(--easeo)}
+.reveal.in{opacity:1;transform:none}
+.reveal:nth-child(2){transition-delay:.08s}
+.reveal:nth-child(3){transition-delay:.16s}
+.reveal:nth-child(4){transition-delay:.24s}
+.reveal:nth-child(5){transition-delay:.32s}
+.reveal:nth-child(6){transition-delay:.4s}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .process-wrap{grid-template-columns:1fr}
+  .pricing-wrap{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .contact-grid{grid-template-columns:1fr}
+  .footer-inner{flex-direction:column}
+}
+@media(max-width:600px){
+  section{padding:5rem 5%}
+  .f-row{grid-template-columns:1fr}
+  .team-cards{grid-template-columns:1fr 1fr}
+  .hero-title{font-size:2.8rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <span class="nav-logo">Web<span>Design</span></span>
+  <div class="nav-right">
+    <button class="btn-theme" id="themeToggle" aria-label="Toggle theme">☀</button>
+    <button class="btn-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      Get a quote <span class="arrow">→</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-dot"></div>
+      Now accepting clients · Founded 2026
+    </div>
+    <h1 class="hero-title">
+      Websites built<br>for <em>real</em> results
+    </h1>
+    <p class="hero-sub">Clean, fast, custom-built sites for small businesses, startups, and online stores. You deal directly with the people doing the work.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">
+        See pricing
+      </button>
+      <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+        Start a project →
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee">
+    <span class="marquee-item">Web Design</span>
+    <span class="marquee-item">E-Commerce</span>
+    <span class="marquee-item">Mobile-First</span>
+    <span class="marquee-item">SEO Setup</span>
+    <span class="marquee-item">Fast Load Times</span>
+    <span class="marquee-item">Custom Build</span>
+    <span class="marquee-item">Small Business</span>
+    <span class="marquee-item">Startups</span>
+    <span class="marquee-item">Online Stores</span>
+    <span class="marquee-item">UI / UX</span>
+    <span class="marquee-item">No Templates</span>
+    <span class="marquee-item">Direct Communication</span>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <span class="eyebrow">How it works</span>
+    <h2 class="section-h">Simple process,<br>no surprises</h2>
+    <div class="process-wrap">
+      <div class="p-step reveal" data-n="01">
+        <div class="p-icon">📞</div>
+        <h3>Discovery call</h3>
+        <p>We start by understanding your business, your goals, and what success actually looks like for you. No generic questionnaires.</p>
+      </div>
+      <div class="p-step reveal" data-n="02">
+        <div class="p-icon">🗺</div>
+        <h3>Plan & wireframe</h3>
+        <p>Before any design happens, we map out the structure and flow. You see the skeleton before we add skin to it.</p>
+      </div>
+      <div class="p-step reveal" data-n="03">
+        <div class="p-icon">⚙️</div>
+        <h3>Design & build</h3>
+        <p>We design and develop in tandem. Regular check-ins, no disappearing for weeks. You stay in the loop throughout.</p>
+      </div>
+      <div class="p-step reveal" data-n="04">
+        <div class="p-icon">🚀</div>
+        <h3>Launch & support</h3>
+        <p>We handle deployment and stay available after launch. Every plan includes post-launch support so you're never left stranded.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <span class="eyebrow">Pricing</span>
+    <h2 class="section-h">Transparent pricing,<br>no hidden fees</h2>
+    <div class="pricing-wrap">
+
+      <!-- Launch -->
+      <div class="p-card reveal">
+        <div class="p-tier">Starter</div>
+        <div class="p-name">Launch</div>
+        <div class="p-desc">For small businesses that need a clean, professional site fast.</div>
+        <div class="p-price">
+          <span class="p-cur">$</span>
+          <span class="p-amt">250</span>
+          <span class="p-per">/ project</span>
+        </div>
+        <ul class="p-feats">
+          <li>Up to 4 pages</li>
+          <li>Mobile-responsive design</li>
+          <li>Basic SEO setup</li>
+          <li>Contact form</li>
+          <li>2 rounds of revisions</li>
+          <li>30-day support</li>
+          <li class="no">E-commerce</li>
+          <li class="no">Custom animations</li>
+          <li class="no">Maintenance plan</li>
+        </ul>
+        <button class="p-btn outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get started</button>
+      </div>
+
+      <!-- Growth -->
+      <div class="p-card hot reveal">
+        <div class="p-hot-badge">Most popular</div>
+        <div class="p-tier">Professional</div>
+        <div class="p-name">Growth</div>
+        <div class="p-desc">For businesses that want more pages, better SEO, and a site that actually sells.</div>
+        <div class="p-price">
+          <span class="p-cur">$</span>
+          <span class="p-amt">500</span>
+          <span class="p-per">/ project</span>
+        </div>
+        <ul class="p-feats">
+          <li>Up to 10 pages</li>
+          <li>Advanced responsive design</li>
+          <li>Full SEO setup</li>
+          <li>CMS (Webflow / WordPress)</li>
+          <li>Custom animations</li>
+          <li>4 rounds of revisions</li>
+          <li>E-commerce (up to 50 products)</li>
+          <li>60-day support</li>
+          <li class="no">Maintenance plan</li>
+        </ul>
+        <button class="p-btn solid" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get started</button>
+      </div>
+
+      <!-- Scale -->
+      <div class="p-card reveal">
+        <div class="p-tier">Enterprise</div>
+        <div class="p-name">Scale</div>
+        <div class="p-desc">Full build for businesses that need everything — e-commerce, CMS, custom features.</div>
+        <div class="p-price">
+          <span class="p-cur">$</span>
+          <span class="p-amt">1,000</span>
+          <span class="p-per">+ / project</span>
+        </div>
+        <ul class="p-feats">
+          <li>Unlimited pages</li>
+          <li>Custom functionality</li>
+          <li>Full e-commerce build</li>
+          <li>Brand identity system</li>
+          <li>Advanced SEO setup</li>
+          <li>Unlimited revisions</li>
+          <li>90-day support</li>
+          <li>Maintenance plan included</li>
+          <li>Priority access</li>
+        </ul>
+        <button class="p-btn outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get started</button>
+      </div>
+
+    </div>
+    <p class="pricing-note">Not sure which fits? <a href="#contact">Just reach out — we'll figure it out.</a></p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <span class="eyebrow">About us</span>
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div style="font-family:'Geist Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3);margin-bottom:1.25rem">The team</div>
+        <div class="team-cards">
+          <div class="tm-card">
+            <div class="tm-av" style="background:linear-gradient(135deg,#6c63ff,#9d97ff)">LM</div>
+            <h4>Logan McDonald</h4>
+            <span>Co-Founder · Design</span>
+          </div>
+          <div class="tm-card">
+            <div class="tm-av" style="background:linear-gradient(135deg,#00d4b4,#0891b2)">LV</div>
+            <h4>Liam Verri</h4>
+            <span>Co-Founder · Dev</span>
+          </div>
+        </div>
+        <div style="margin-top:1.25rem;padding:1.1rem 1.25rem;border-radius:var(--r);border:1px solid var(--b);background:var(--surf2);font-size:.8rem;color:var(--ink2);line-height:1.65">
+          We started WebDesign because we were tired of seeing small businesses pay agency prices for sites that looked the same as everyone else's. So we build them differently.
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <h2 class="section-h">Two people who<br>actually care</h2>
+        <p>WebDesign was started in 2026 by Logan McDonald and Liam Verri. We got tired of watching small businesses get charged way too much for slow, generic websites that didn't actually help them grow.</p>
+        <p>We're a two-person team, which means you talk directly to the people building your site. No account managers, no hand-offs, no surprises. Just fast communication and a site that actually represents your business.</p>
+        <div class="value-list">
+          <div class="val">
+            <div class="val-icon">🎯</div>
+            <div>
+              <h4>Strategy first</h4>
+              <p>We understand your business before we open any design tool.</p>
+            </div>
+          </div>
+          <div class="val">
+            <div class="val-icon">⚡</div>
+            <div>
+              <h4>Fast, not rushed</h4>
+              <p>Quick timelines without cutting corners. We don't compromise on either.</p>
+            </div>
+          </div>
+          <div class="val">
+            <div class="val-icon">🤝</div>
+            <div>
+              <h4>Direct access</h4>
+              <p>You always know where things stand and who to ask.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <span class="eyebrow">Contact</span>
+    <div class="contact-grid">
+      <div class="reveal">
+        <h2 class="section-h">Let's build<br>something good</h2>
+        <p>Tell us about your project. We typically reply within a day and offer a free call for any serious inquiry.</p>
+        <div class="c-details">
+          <div class="c-item"><span class="c-icon">📧</span> maskedlink.creator@hey.com</div>
+          <div class="c-item"><span class="c-icon">📞</span> (704) 907-6592</div>
+          <div class="c-item"><span class="c-icon">🕐</span> Mon–Fri, 9am–6pm ET</div>
+        </div>
+      </div>
+      <div class="contact-form-wrap reveal" id="contactForm">
+        <div class="form-head">Start a project</div>
+        <div class="f-row">
+          <div class="f-group">
+            <label for="fname">First name</label>
+            <input type="text" id="fname" placeholder="Logan" autocomplete="given-name">
+          </div>
+          <div class="f-group">
+            <label for="lname">Last name</label>
+            <input type="text" id="lname" placeholder="Smith" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="f-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="you@yourbusiness.com" autocomplete="email">
+        </div>
+        <div class="f-group">
+          <label for="service">What do you need?</label>
+          <select id="service">
+            <option value="">Select…</option>
+            <option>Custom Web Design</option>
+            <option>E-Commerce Store</option>
+            <option>Website Redesign</option>
+            <option>SEO Setup</option>
+            <option>Maintenance</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label for="budget">Budget range</label>
+          <select id="budget">
+            <option value="">Select…</option>
+            <option>$250 – $500</option>
+            <option>$500 – $1,000</option>
+            <option>$1,000+</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label for="message">Tell us about your project</label>
+          <textarea id="message" placeholder="What does your business do? What are you hoping the site will do for you?"></textarea>
+        </div>
+        <button class="btn-send" onclick="submitForm()">Send message →</button>
+        <div class="form-ok" id="formSuccess">
+          <div class="form-ok-icon">✅</div>
+          <h3>Message received</h3>
+          <p>We'll be in touch within one business day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <span class="eyebrow">FAQ</span>
+    <h2 class="section-h" style="text-align:center">Common questions</h2>
+    <div class="faq-inner">
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFAQ(this)">
+          How long does a project take?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">The Launch plan usually wraps in 2–3 weeks. Growth takes 4–6 weeks. Scale projects run 8–12 weeks depending on scope. We'll give you a concrete timeline on our first call.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFAQ(this)">
+          Do you work with clients outside the US?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Yes. We work with clients anywhere. Everything happens via video calls and shared tools — time zones haven't been an issue.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFAQ(this)">
+          Can I edit my site after it launches?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Always. We build on Webflow or WordPress so you can update text, images, and products without touching code. We also walk you through how everything works before handing it over.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFAQ(this)">
+          What do you need from me to get started?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Just your ideas and goals to start. During onboarding we'll ask for your logo, any existing brand assets, and your content. If you don't have those yet, we can help.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFAQ(this)">
+          How does payment work?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">50% upfront, 50% on launch day. For Scale projects we can split into three payments. We accept card, bank transfer, and PayPal.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFAQ(this)">
+          Do you handle hosting and domain setup?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Yes. We can set up and manage hosting for you, and we'll recommend whatever fits your budget and needs best. Maintenance plans include server monitoring and security updates.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="nav-logo">Web<span>Design</span></span>
+      <p>Clean, fast websites for small businesses and startups. Built by Logan McDonald and Liam Verri.</p>
+      <div class="footer-social">
+        <a href="#" class="soc" aria-label="X">𝕏</a>
+        <a href="#" class="soc" aria-label="Instagram">◎</a>
+        <a href="#" class="soc" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="#process">How it works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:maskedlink.creator@hey.com">maskedlink.creator@hey.com</a></li>
+        <li><a href="tel:7049076592">(704) 907-6592</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 WebDesign. All rights reserved.</p>
+    <div class="footer-legal">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Theme
+const themeBtn = document.getElementById('themeToggle');
+let theme = localStorage.getItem('theme') || 'dark';
+applyTheme(theme);
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  themeBtn.textContent = t === 'dark' ? '☀' : '☾';
+  localStorage.setItem('theme', t);
+  theme = t;
+}
+themeBtn.addEventListener('click', () => applyTheme(theme === 'dark' ? 'light' : 'dark'));
+
+// Scroll reveal
+const ro = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+// FAQ
+function toggleFAQ(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// Marquee duplicate
+const mq = document.getElementById('marquee');
+mq.innerHTML += mq.innerHTML;
+
+// Nav shadow on scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').style.borderBottomColor =
+    window.scrollY > 30 ? 'var(--b2)' : 'var(--b)';
+}, { passive: true });
+
+// Contact form — Web3Forms
+async function submitForm() {
+  const fname   = document.getElementById('fname').value.trim();
+  const lname   = document.getElementById('lname').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const service = document.getElementById('service').value;
+  const budget  = document.getElementById('budget').value;
+  const message = document.getElementById('message').value.trim();
+  if (!email || !message) { alert('Please fill in your email and message.'); return; }
+  const btn = document.querySelector('.btn-send');
+  btn.textContent = 'Sending…'; btn.disabled = true;
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: 'YOUR_WEB3FORMS_KEY',
+        to: 'maskedlink.creator@hey.com',
+        subject: `New inquiry from ${fname} ${lname}`,
+        from_name: `${fname} ${lname}`,
+        replyto: email,
+        message: `Name: ${fname} ${lname}\nEmail: ${email}\nService: ${service || '—'}\nBudget: ${budget || '—'}\n\n${message}`
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.querySelectorAll('#contactForm .f-group, #contactForm .f-row, #contactForm .form-head, #contactForm .btn-send').forEach(el => el.style.display = 'none');
+      document.getElementById('formSuccess').style.display = 'block';
+    } else throw new Error();
+  } catch {
+    btn.textContent = 'Send message →'; btn.disabled = false;
+    alert('Something went wrong. Email us directly at maskedlink.creator@hey.com');
+  }
+}
+</script>
+</body>
+</html>
